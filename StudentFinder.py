@@ -10,3 +10,13 @@ class StudentFinder:
         if not self.data:
             raise ValueError("Дані не завантажено")
         return [student for student in self.data if student['Прізвище'] == surname]
+
+    def display_students_info(self, students):
+        for student in students:
+            pib = student['Прізвище'] + ' ' + student['Ім\'я']
+            print(f"ПІБ: {pib}")
+            print("Завдання:")
+            for key, value in student.items():
+                if 'Завдання' in key:
+                    print(f"  {key}:" + ' ' + f"{value}")
+            print("-----------")
