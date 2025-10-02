@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 import performance
 from student import Student
 
@@ -44,3 +46,16 @@ class StudentData:
         surname = self.__student.get_surname()
         group = self.__student.get_group_number()
         return f"{surname}_{group}"
+
+class DataSaver(ABC):
+    def __init__(self, student_data: StudentData, work_number: int):
+        self._data = student_data.get_data_dict() # Словник з даними
+        self._filename_base = student_data.get_filename_base()
+        self._work_number = work_number
+
+    @abstractmethod
+    def save(self):
+        pass
+
+    def _get_full_filename(self, format_extension: str) -> str:
+        return f"{self._filename_base}_{self._work_number}.{format_extension}"
