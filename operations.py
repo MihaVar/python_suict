@@ -1,3 +1,4 @@
+import csv
 import json
 from abc import ABC, abstractmethod
 
@@ -50,7 +51,7 @@ class StudentData:
 
 class DataSaver(ABC):
     def __init__(self, student_data: StudentData, work_number: int):
-        self._data = student_data.get_data_dict() # Словник з даними
+        self._data = student_data.get_data_dict()
         self._filename_base = student_data.get_filename_base()
         self._work_number = work_number
 
@@ -65,6 +66,37 @@ class JSONSaver(DataSaver):
     def save(self):
         filename = self._get_full_filename("json")
         with open(filename, 'w', encoding='utf-8') as f:
-            # Використовуємо ensure_ascii=False для коректного збереження кирилиці
             json.dump(self._data, f, ensure_ascii=False, indent=4)
-        print(f"✅ Дані успішно збережено у JSON файл: {filename}")
+        print(f"Дані успішно збережено у JSON файл: {filename}")
+
+
+class CSVSaver(DataSaver):
+    def save(self):
+        filename = self._get_full_filename("csv")
+        student_info = self._data["Студент"]
+        performance_info = self._data["Успішність"]
+        fieldnames = ["ПІБ", "Номер_Групи", "Дата_Народження", "Реальний_Середній_Бал", "Бажаний_Середній_Бал"]
+
+        row = {
+            "ПІБ": student_info["ПІБ"],
+            "Номер_Групи": student_info["Номер_Групи"],
+            "Дата_Народження": student_info["Дата_Народження"],
+            "Реальний_Середній_Бал": performance_info["Реальний_Середній_Бал"],
+            "Бажаний_Середній_Бал": performance_info["Бажаний_Середній_Бал"],
+        }
+
+        for item in performance_info["Деталі_успішності"]:
+            subject = item["Предмет"]
+            real_key = f"{subject}_Реальний_Бал"
+            desired_key = f"{subject}_Бажаний_Бал"
+
+            fieldnames.extend([real_key, desired_key])
+            row[real_key] = item["Реальний_Бал"]
+            row[desired_key] = item["Бажаний_Бал"]
+
+        with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
+            writer.writeheader()
+            writer.writerow(row)
+
+        print(f"Дані успішно збережено у CSV файл: {filename}")
