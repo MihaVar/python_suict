@@ -1,37 +1,16 @@
-from datetime import date
+# This is a sample Python script.
 
-import student
-import operations
-import performance
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-if __name__ == "__main__":
-    student = student.Student(
-        surname="Маляр",
-        name="Роман",
-        patronymic="Олексійович",
-        group_number="ПДМ-51",
-        birth_date=date(2004, 4, 9)
-    )
 
-    subjects = ["DevOps", "ІППЗ", "МПНД"]
-    real_scores = [80, 85, 75]
-    desired_scores = [90, 90, 90]
-    desired_avg = 90.0
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
-    real_performance = performance.RealPerformance(subjects, real_scores)
-    desired_performance = performance.DesiredPerformance(subjects, desired_scores, desired_avg)
 
-    real_avg = real_performance.calculate_average_score()
-    print(f"Розрахований реальний середній бал: {real_avg:.2f}")
-    print(f"Бажаний середній бал: {desired_performance.calculate_average_score():.2f}")
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print_hi('PyCharm')
 
-    student_data_aggregator = operations.StudentData(student, real_performance, desired_performance)
-    data_dictionary = student_data_aggregator.get_data_dict()
-    print("Структура даних (Словник):")
-    work_number = 1
-
-    json_saver = operations.JSONSaver(student_data_aggregator, work_number)
-    json_saver.save()
-
-    csv_saver = operations.CSVSaver(student_data_aggregator, work_number)
-    csv_saver.save()
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
