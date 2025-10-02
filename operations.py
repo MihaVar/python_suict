@@ -1,3 +1,4 @@
+import json
 from abc import ABC, abstractmethod
 
 import performance
@@ -59,3 +60,11 @@ class DataSaver(ABC):
 
     def _get_full_filename(self, format_extension: str) -> str:
         return f"{self._filename_base}_{self._work_number}.{format_extension}"
+
+class JSONSaver(DataSaver):
+    def save(self):
+        filename = self._get_full_filename("json")
+        with open(filename, 'w', encoding='utf-8') as f:
+            # Використовуємо ensure_ascii=False для коректного збереження кирилиці
+            json.dump(self._data, f, ensure_ascii=False, indent=4)
+        print(f"✅ Дані успішно збережено у JSON файл: {filename}")
