@@ -10,3 +10,9 @@ class Score:
             self.text = self.canvas.create_text(350,10, text=f"Catch: 0 Missed: 0", font=('Helvetica', 16))
         else:
             self.canvas.itemconfig(self.text, text=f"Catch: {self.score} Missed: {self.missed}")
+    def catch_egg(self):
+        self.score += 1
+        self.show_text()
+    def missed_egg(self):
+        self.missed += 1
+        self.show_text()
