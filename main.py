@@ -22,6 +22,7 @@ while 1:
     for egg in list(eggs):
         if egg.draw() == 'hit bottom':
             eggs.remove(egg)
+    catcher.draw()
     tk.update_idletasks()
     tk.update()
     time.sleep(0.01)
