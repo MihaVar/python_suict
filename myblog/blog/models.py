@@ -5,12 +5,12 @@ from django.utils import timezone
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(status='Post.Status.PUBLISHED')
+        return super().get_queryset().filter(status=Post.Status.PUBLISHED)
 
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
-        PUBLIC = 'PB', 'Published'
+        PUBLISHED = 'PB', 'Published'
 
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=250)
