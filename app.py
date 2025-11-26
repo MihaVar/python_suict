@@ -24,5 +24,14 @@ def error():
     return str(x)
 
 
+@app.route("/status")
+def status():
+    uptime = time.time() - start_time
+    return jsonify({
+        "uptime_seconds": round(uptime, 2),
+        "requests": request_count
+    })
+
+
 if __name__ == "__main__":
     app.run(port=5000)
