@@ -29,8 +29,13 @@ def index():
 @app.route("/error")
 def error():
     logging.warning("Запит на /error — буде згенерована помилка")
-    x = 1 / 0
-    return str(x)
+    try:
+        x = 1 / 0
+        return str(x)
+    except Exception:
+        logging.exception("Сталася помилка у маршруті /error")
+        send_statsd("error: ZeroDivisionError")
+        return "Сталася помилка!", 500
 
 
 @app.route("/status")
