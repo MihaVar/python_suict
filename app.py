@@ -18,5 +18,11 @@ def index():
     return "Сервіс працює"
 
 
+@app.route("/error")
+def error():
+    x = 1 / 0
+    return str(x)
+
+
 if __name__ == "__main__":
     app.run(port=5000)
