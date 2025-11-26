@@ -1,5 +1,12 @@
 from flask import Flask, jsonify
 import time
+import logging
+
+logging.basicConfig(
+    filename="app.log",
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
 
 app = Flask(__name__)
 
