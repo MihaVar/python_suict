@@ -22,17 +22,20 @@ def before_request():
 
 @app.route("/")
 def index():
+    logging.info("Запит на /")
     return "Сервіс працює"
 
 
 @app.route("/error")
 def error():
+    logging.warning("Запит на /error — буде згенерована помилка")
     x = 1 / 0
     return str(x)
 
 
 @app.route("/status")
 def status():
+    logging.info("Запит на /status")
     uptime = time.time() - start_time
     return jsonify({
         "uptime_seconds": round(uptime, 2),
