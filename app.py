@@ -1,12 +1,21 @@
 from flask import Flask, jsonify
 import time
 import logging
+import socket
+
+STATSD_HOST = "127.0.0.1"
+STATSD_PORT = 9999
 
 logging.basicConfig(
     filename="app.log",
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
+
+def send_statsd(message: str):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.sendto(message.encode("utf-8"), (STATSD_HOST, STATSD_PORT))
+    sock.close()
 
 app = Flask(__name__)
 
