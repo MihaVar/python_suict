@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
-from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import PostSitemap
+from .feeds import LatestPostsFeed
 
 sitemaps = {
     'posts': PostSitemap,
@@ -18,4 +18,5 @@ urlpatterns = [
     path('post/<int:post_id>/share/', views.post_share, name='post_share'),
     path('<int:post_id>/comment/', views.post_comment, name='post_comment'),
     path('tag/<slug:tag_slug>/', views.PostListView.as_view(), name='post_list_by_tag'),
+    path('feed/', LatestPostsFeed(), name='post_feed'),
 ]
