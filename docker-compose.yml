@@ -12,5 +12,19 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
 
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_PORT: ${APP_PORT}
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    restart: unless-stopped
+
 volumes:
   pg_data:
